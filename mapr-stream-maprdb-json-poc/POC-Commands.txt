@@ -1,0 +1,20 @@
+maprcli stream create -path /poc-stream
+
+Change Permission : maprcli stream edit -path /poc-stream -produceperm p -consumeperm p -topicperm p
+
+
+TOPIC CREATION
+
+maprcli stream topic create -path /poc-stream  -topic json-messages
+
+CREATE TABLE IN MAPR DB
+create /apps/json-poc
+
+java -cp `mapr classpath`:`hadoop classpath`:mapr-stream-maprdb-json-poc-1.0-SNAPSHOT-jar-with-dependencies.jar com.mapr.streams.producer.JsonProducer /poc-stream:json-messages /home/mapr/SAIWS/POC/json.data 10
+
+java -cp `mapr classpath`:`hadoop classpath`:mapr-stream-maprdb-json-poc-1.0-SNAPSHOT-jar-with-dependencies.jar com.mapr.streams.maprdb.consumer.MapRDBConsumer /poc-stream:json-messages /apps/json-poc
+
+
+LIST DATA 
+
+find /apps/json-poc

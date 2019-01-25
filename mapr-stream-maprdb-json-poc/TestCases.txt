@@ -1,0 +1,67 @@
+Following are the test cases
+
+1) Created MapR6.0.1 SANDBOX
+
+1) I created a json file with below data and named file as json.data
+
+{
+	"timestamp":1548435118958,
+	"timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM",
+	"status":"OK",
+	"total":1,
+	"data":[
+		{
+			"partitionid":0,
+			"physicalsize":25010176,
+			"logicalsize":109174784,
+			"maxoffset":2001999,
+			"minoffsetacrossconsumers":2002000,
+			"mintimestamp":"2019-01-25T08:49:07.269-0800 AM",
+			"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM",
+			"mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM",
+			"fid":"2119.108.262584",
+			"master":"maprdemo:5660",
+			"servers":"maprdemo:5660",
+			"timestamptype":"CreateTime"
+		}
+	]
+}
+
+2) Created the producer to read this data file and form it as a String and producing 10 jsons and publishing  data to MapRStreams to topics /poc-stream:json-messages. Following is the command for running the producer
+
+java -cp `mapr classpath`:`hadoop classpath`:mapr-stream-maprdb-json-poc-1.0-SNAPSHOT-jar-with-dependencies.jar com.mapr.streams.producer.JsonProducer /poc-stream:json-messages /home/mapr/SAIWS/POC/json.data 10
+
+
+3)  Created the consumer to read the data from MapR Streams messages from topic /poc-stream:json-messages. Following is the command for running the consumer
+
+
+java -cp `mapr classpath`:`hadoop classpath`:mapr-stream-maprdb-json-poc-1.0-SNAPSHOT-jar-with-dependencies.jar com.mapr.streams.maprdb.consumer.MapRDBConsumer /poc-stream:json-messages /apps/json-poc
+
+4) Used OJAI API and able to write the data to MapRDB. Table created /apps/json-poc using below command
+
+create /apps/json-poc
+
+5) We are able to see the data in MapR DB
+
+find /apps/json-poc
+
+{"_id":"1362","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"22288","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"28093","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"29643","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"35357","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"45992","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"4613","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"48672","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"51967","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"5556","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"56034","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"60202","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"62980","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"70956","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"70997","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"76450","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"80780","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"85961","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"88865","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+{"_id":"99170","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
