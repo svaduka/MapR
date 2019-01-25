@@ -1,0 +1,9 @@
+/classes/
+/test-classes/
+*.class
+*.lst
+*.jar
+*.eclipse.*
+*/target/*
+.settings
+.project
