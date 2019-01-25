@@ -44,7 +44,9 @@ public class MapRStreamUtil {
 
 	public static boolean sendRecord(KafkaProducer<String, String> producer, final String topicName,
 			final String data) {
+		System.out.println("data producing");
 		producer.send(new ProducerRecord<String, String>(topicName, data));
+		producer.flush();
 		return Boolean.TRUE;
 	}
 
@@ -55,8 +57,10 @@ public class MapRStreamUtil {
 		if (StringUtils.isEmpty(consumerProperties)) {
 			consumerProperties = "consumer.props";
 		}
+		System.out.println("Using Below consumer properties:"+consumerProperties);
 		try (InputStream props = Resources.getResource("consumer.props").openStream()) {
 			Properties properties = new Properties();
+			System.out.println("Loading");
 			properties.load(props);
 			consumer = new KafkaConsumer<String, String>(properties);
 		}

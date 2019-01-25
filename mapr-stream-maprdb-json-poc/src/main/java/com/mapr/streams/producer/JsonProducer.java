@@ -22,10 +22,11 @@ public class JsonProducer {
 		}
 		
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		if(args.length < 2) {
 			System.out.println("Java Usage: JsonProducer<TOPIC-NAME> <INPUT-LOCATION> [produceCount/1] [producer.properties]");
+			return;
 		}
 		final String topicName = args[0];
 		System.out.println("Current Topic:"+topicName);
@@ -46,7 +47,8 @@ public class JsonProducer {
 		}
 		
 		
-		
+		JsonProducer jsonProducer = new JsonProducer();
+		jsonProducer.doProducerActivity(topicName, inputFileLocation, produceCount, producerPropertyFile);
 	}
 
 }

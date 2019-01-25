@@ -26,9 +26,10 @@ public class MapRDBConsumer {
 	{
 		Consumer<String, String> consumer = MapRStreamUtil.createConsumer(consumerPropertyFile);
 		consumer.subscribe(Arrays.asList(topicName));
+		
 		while (true) {
 			
-			ConsumerRecords<String, String> records = consumer.poll(100);
+			ConsumerRecords<String, String> records = consumer.poll(1);
 			
 			if (records.count() != 0) {
 				
@@ -39,6 +40,8 @@ public class MapRDBConsumer {
 					writeMsgToMapRDB(jsonString, tableName);
 				}
 				
+			}else {
+				System.out.println("record count is 0");
 			}
 		}
 		
@@ -77,10 +80,9 @@ public class MapRDBConsumer {
 		if(args.length == 3) {
 			consumerPropertyFile=args[2];
 			System.out.println("Using consumerProperty File:"+consumerPropertyFile);
-			
+		}			
 			MapRDBConsumer mapRDBConsumer = new MapRDBConsumer();
 			mapRDBConsumer.doConsumerActivity(topicName, tableName, consumerPropertyFile);
-		}
 		
 		
 	}
