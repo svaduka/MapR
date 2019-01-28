@@ -2,26 +2,23 @@ package com.mapr.streams.maprdb.consumer;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Random;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.ojai.Document;
-import org.ojai.store.Connection;
-import org.ojai.store.DocumentStore;
-import org.ojai.store.DriverManager;
 
 import com.mapr.streams.util.MapRStreamUtil;
+
+import mapr.com.maprdb.util.MapRDBUtil;
 
 //TODO Do logging
 public class MapRDBConsumer {
 	
-	private static Connection connection =null;
-	static {
-		connection = DriverManager.getConnection("ojai:mapr:");
-	}
-	
+//	private static Connection connection =null;
+//	static {
+//		connection = DriverManager.getConnection("ojai:mapr:");
+//	}
+//	
 	public void doConsumerActivity(final String topicName,final String tableName, String consumerPropertyFile) throws IOException, InterruptedException 
 	{
 		Consumer<String, String> consumer = MapRStreamUtil.createConsumer(consumerPropertyFile);
@@ -37,7 +34,7 @@ public class MapRDBConsumer {
 					final String jsonString = record.value();
 					System.out.println("-----JSON STRING -----");
 					System.out.println(jsonString);
-					writeMsgToMapRDB(jsonString, tableName);
+					MapRDBUtil.writeMsgToMapRDB(jsonString, tableName);
 				}
 				
 			}else {
@@ -47,22 +44,22 @@ public class MapRDBConsumer {
 		
 	}
 	
-	public boolean writeMsgToMapRDB(final String msg, final String tableName) {
-		
-		//Create Document from json Msg
-		
-		if(connection == null) {
-			connection = DriverManager.getConnection("ojai:mapr:");
-		}
-		
-		DocumentStore store = connection.getStore(tableName);
-		
-		Document userDocument = connection.newDocument(msg);
-		userDocument.setId( Integer.toString(userDocument.getString("__Id")==null?new Random().nextInt(100000):userDocument.getInt("__Id")));
-		store.insertOrReplace(userDocument);
-		
-		return Boolean.TRUE;
-	}
+//	public boolean writeMsgToMapRDB(final String msg, final String tableName) {
+//		
+//		//Create Document from json Msg
+//		
+//		if(connection == null) {
+//			connection = DriverManager.getConnection("ojai:mapr:");
+//		}
+//		
+//		DocumentStore store = connection.getStore(tableName);
+//		
+//		Document userDocument = connection.newDocument(msg);
+//		userDocument.setId( Integer.toString(userDocument.getString("__Id")==null?new Random().nextInt(100000):userDocument.getInt("__Id")));
+//		store.insertOrReplace(userDocument);
+//		
+//		return Boolean.TRUE;
+//	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		if(args.length < 2) {
