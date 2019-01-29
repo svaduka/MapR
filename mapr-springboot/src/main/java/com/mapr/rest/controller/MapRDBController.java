@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import mapr.com.maprdb.util.MapRDBUtil;
+
 
 @Controller
 public class MapRDBController {
@@ -14,7 +16,7 @@ public class MapRDBController {
 	   @GetMapping("/MapRDB/lookUp")
 	    @ResponseBody
 	    public String mapRDBLookUp(@RequestParam(name="lookUpId", required=true) String name) {
-	        return String.format(welcomemsg, name);
+	        return MapRDBUtil.readJsonFromID(name, "/apps/json-poc");
 	    }
 
 }

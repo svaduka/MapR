@@ -9,14 +9,15 @@ import org.ojai.store.DriverManager;
 
 public class MapRDBUtil {
 
-	private static Connection connection = null;
-	static {
-		connection = DriverManager.getConnection("ojai:mapr:");
-	}
+//	private static Connection connection = null;
+//	static {
+//		connection = DriverManager.getConnection("ojai:mapr:");
+//	}
 	
 	public static boolean writeMsgToMapRDB(final String msg, final String tableName) {
 
 		// Create Document from json Msg
+		Connection connection = null;
 
 		if (connection == null) {
 			connection = DriverManager.getConnection("ojai:mapr:");
@@ -29,11 +30,13 @@ public class MapRDBUtil {
 				userDocument.getString("__Id") == null ? new Random().nextInt(100000) : userDocument.getInt("__Id")));
 		store.insertOrReplace(userDocument);
 		store.close();
+		connection.close();
 		return Boolean.TRUE;
 	}
 	
 	public static String readJsonFromID(final String id,final String tableName) 
 	{
+		Connection connection = null;
 		if (connection == null) {
 			connection = DriverManager.getConnection("ojai:mapr:");
 		}
@@ -51,9 +54,14 @@ public class MapRDBUtil {
 	    data=document.asJsonString();      
 	    // Close this instance of OJAI DocumentStore
 	    store.close();
+	    connection.close();
 	    System.out.println("data:"+data);
 		
 		return data;
+	}
+	
+	public static void main(String[] args) {
+		MapRDBUtil.readJsonFromID(args[0], args[1]);
 	}
 	
 }
