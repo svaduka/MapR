@@ -1,0 +1,28 @@
+[mapr@maprdemo META-INF]$ curl http://localhost:8083/MapRDB/lookUp?lookUpId=99170
+{"_id":"99170","data":[{"fid":"2119.108.262584","logicalsize":109174784,"master":"maprdemo:5660","maxoffset":2001999,"maxtimestamp":"2019-01-25T08:51:28.255-0800 AM","minoffsetacrossconsumers":2002000,"mintimestamp":"2019-01-25T08:49:07.269-0800 AM","mintimestampacrossconsumers":"2019-01-25T08:51:28.255-0800 AM","partitionid":0,"physicalsize":25010176,"servers":"maprdemo:5660","timestamptype":"CreateTime"}],"status":"OK","timeofday":"2019-01-25 08:51:58.958 GMT-0800 AM","timestamp":1548435118958,"total":1}
+
+OTHERS
+
+find /apps/json-poc
+
+
+netstat -punta | grep 8083
+
+
+curl http://localhost:8083/MapRDB
+
+
+/opt/mapr/logs/createsystemvolumes.log
+/opt/mapr/logs/mfs.log
+
+
+java -cp `mapr classpath` -Dhadoop.home.dir=/opt/mapr/hadoop/hadoop-2.7.0 -Dlog4j.configuration=file:/home/mapr/SAIWS/POC/log4j.properties -Djava.library.path=/opt/mapr/hadoop/hadoop-2.7.0/lib/native:/opt/mapr/lib/ -Dmapr.library.flatclass -jar /home/mapr/SAIWS/eclipseWS/mapr-springboot/target/mapr-springboot-1.0-SNAPSHOT.jar
+
+
+org.springframework.ide.eclipse.beans.core.metadata
+
+
+/home/mapr/SAIWS/eclipseWS/maprdb-poc/target/maprdb-poc-1.0-SNAPSHOT.jar
+
+
+java -cp /home/mapr/Test/BOOT-INF/lib/*:`mapr classpath`:maprdb-poc-1.0-SNAPSHOT.jar:mapr-springboot-1.0-SNAPSHOT.jar:spring-shell-1.2.0.RELEASE.jar -Dlog4j.configuration=file:/home/mapr/SAIWS/POC/log4j.properties -Dhadoop.home.dir=/opt/mapr/hadoop/hadoop-2.7.0 -Djava.library.path=/opt/mapr/hadoop/hadoop-2.7.0/lib/native:/opt/mapr/lib/ com.mapr.server.main.MaprSpringbootApplication
