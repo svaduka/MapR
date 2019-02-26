@@ -1,5 +1,5 @@
 # MapR
-This project is used for MapR UseCases
+This project is used for MapR Team members
 
 Following are the list of items need to learn/develop by every team member of MapR-Team
 
