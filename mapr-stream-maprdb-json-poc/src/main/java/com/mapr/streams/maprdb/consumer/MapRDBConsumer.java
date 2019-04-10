@@ -2,10 +2,13 @@ package com.mapr.streams.maprdb.consumer;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.common.TopicPartition;
 
 import com.mapr.streams.util.MapRStreamUtil;
 
@@ -22,7 +25,26 @@ public class MapRDBConsumer {
 	public void doConsumerActivity(final String topicName,final String tableName, String consumerPropertyFile) throws IOException, InterruptedException 
 	{
 		Consumer<String, String> consumer = MapRStreamUtil.createConsumer(consumerPropertyFile);
-		consumer.subscribe(Arrays.asList(topicName));
+		consumer.subscribe(Arrays.asList(topicName), new ConsumerRebalanceListener() {
+			
+			@Override
+			public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
+				System.out.println("onPartitionsRevoked");
+				for (TopicPartition partition : partitions) {
+					consumer.seek(partition, 0);
+				}
+				
+			}
+			
+			@Override
+			public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+				System.out.println("onPartitionsAssigned");
+				for (TopicPartition partition : partitions) {
+					consumer.seek(partition, 0);
+				}
+				
+			}
+		});
 		
 		while (true) {
 			
